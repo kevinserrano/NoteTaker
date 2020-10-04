@@ -17,3 +17,11 @@ app.use(express.urlencoded({
 app.use(express.json());
 //route to path
 app.use(express.static(__dirname + 'public'));
+
+app.get("/notes", (req, res) => {
+    readFileAsync("./db/db.json", "utf8")
+        .then((result, err) => {
+            if (err) console.log(err);
+            return res.json(JSAON.parse(result));
+        });
+});
