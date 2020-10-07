@@ -35,15 +35,15 @@ app.get("*", (req, res) => {
 
 
 app.post("/api/notes"), (req, res) => {
-    let newNotes = req.body
+    let newNote = req.body
     readFileAsync("./db/db.json", "utf8")
         .then((result, err) => {
             if (err) console.log(err);
             return Promise.resolve(JSON.parse(result));
         })
         .then(data => {
-            newNotes.id = getLastIndex(data) + 1;
-            (data.length > 0) ? data.push(newNotes): data = [newNotes];
+            newNote.id = getLastIndex(data) + 1;
+            (data.length > 0) ? data.push(newNote): data = [newNote];
             return Promise.resolve(data);
         }).then(data => {
             //write the new file
