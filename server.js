@@ -78,3 +78,13 @@ app.delete("/api/notes/:id", (req, res) => {
             if (err) throw err;
         });
 })
+
+// starts the server
+app.listen(PORT, function () {
+    console.log(`Listening on PORT ${PORT}`);
+});
+// gets last id used
+function getLastIndex(data) {
+    if (data.length > 0) return data[data.length - 1].id;
+    return 0;
+}
