@@ -28,7 +28,7 @@ app.get("/api/notes", (req, res) => {
             return res.json(JSAON.parse(result));
         });
 });
-
-
-
-app.post
+//
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/index.html"));
+});
