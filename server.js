@@ -41,5 +41,10 @@ app.post("/api/notes"), (req, res) => {
             if (err) console.log(err);
             return Promise.resolve(JSON.parse(result));
         })
+        .then(data => {
+            newNotes.id = getLastIndex(data) + 1;
+            (data.length > 0) ? data.push(newNotes): data = [newNotes];
+            return Promise.resolve(data);
+        })
 
 }
