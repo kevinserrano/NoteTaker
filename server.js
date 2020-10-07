@@ -32,3 +32,14 @@ app.get("/api/notes", (req, res) => {
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "public/index.html"));
 });
+
+
+app.post("/api/notes"), (req, res) => {
+    let newNotes = req.body
+    readFileAsync("./db/db.json", "utf8")
+        .then((result, err) => {
+            if (err) console.log(err);
+            return Promise.resolve(JSON.parse(result));
+        })
+
+}
