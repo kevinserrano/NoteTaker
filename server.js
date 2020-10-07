@@ -1,4 +1,3 @@
-const e = require('express');
 //load dependencies
 const express = require('express');
 const fs = require('fs');
@@ -19,9 +18,17 @@ app.use(express.json());
 app.use(express.static(__dirname + 'public'));
 
 app.get("/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/notes.html"));
+});
+//getting notes
+app.get("/api/notes", (req, res) => {
     readFileAsync("./db/db.json", "utf8")
         .then((result, err) => {
             if (err) console.log(err);
             return res.json(JSAON.parse(result));
         });
 });
+
+
+
+app.post
