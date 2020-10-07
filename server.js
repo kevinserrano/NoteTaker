@@ -45,6 +45,13 @@ app.post("/api/notes"), (req, res) => {
             newNotes.id = getLastIndex(data) + 1;
             (data.length > 0) ? data.push(newNotes): data = [newNotes];
             return Promise.resolve(data);
+        }).then(data => {
+            //write the new file
+            writeFileAsync("./db/db.json", JSON.stringify(data));
+            res.json(newNote);
         })
+        .catch(err => {
+            if (err) throw err;
+        });
 
 }
