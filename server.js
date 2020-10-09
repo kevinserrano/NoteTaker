@@ -49,7 +49,7 @@ app.post("/api/notes"), (req, res) => {
         })
         .then(data => {
             newNote.id = getLastIndex(data) + 1;
-            (data.length > 0) ? data.push(newNote): data = [newNote];
+            (data.length > 0) ? data.push(notes): data = [newNote];
             return Promise.resolve(data);
         }).then(data => {
             //write the new file
