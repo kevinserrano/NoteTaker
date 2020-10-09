@@ -45,7 +45,7 @@ app.post("/api/notes"), (req, res) => {
     readFileAsync("./db/db.json", "utf8")
         .then((result, err) => {
             if (err) console.log(err);
-            return Promise.resolve(JSON.parse(result));
+            return res.json(result);
         })
         .then(data => {
             newNote.id = getLastIndex(data) + 1;
