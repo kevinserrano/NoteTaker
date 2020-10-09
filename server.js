@@ -3,10 +3,11 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
-
+const notes = require("./db/db.json");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
@@ -28,8 +29,9 @@ app.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 
+
 app.get("/api/notes", (req, res) => {
-    return res.json(result)
+    return res.json(notes)
 });
 
 //
