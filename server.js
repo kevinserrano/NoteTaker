@@ -9,6 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
+const oldNotes = require("./db/db.json");
 
 
 app.use(express.urlencoded({
@@ -50,12 +51,12 @@ app.post("/api/notes"), (req, res) => {
         })
         .then(data => {
             newNote.id = getLastIndex(data) + 1;
-            (data.length > 0) ? data.push(newNote): data = [newNote];
+            (data.length > 0) ? data.push(newNote): data = [oldNotes];
             return Promise.resolve(data);
         }).then(data => {
             //write the new file
             writeFileAsync("./db/db.json", JSON.stringify(data));
-            res.json(newNote);
+            res.json(oldNotes);
         })
         .catch(err => {
             if (err) throw err;
