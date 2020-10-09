@@ -63,27 +63,14 @@ app.post("/api/notes"), (req, res) => {
 }
 
 app.delete("/api/notes/:id", (req, res) => {
-    let id = req.params.id;
-    //read our notes    
-    readFileAsync("./db/db.json", "utf8")
-        .then((result, err) => {
-            if (err) console.log(err);
-            return Promise.resolve(JSON.parse(result));
-        })
-        .then(data => {
-            //removing the entry from the read data         
-            data.splice(data.indexOf(data.find(element => element.id == id)), 1);
-            return Promise.resolve(data);
-        })
-        .then(data => {
-            //write out our updated list
-            writeFileAsync("./db/db.json", JSON.stringify(data));
-            res.send("OK");
-        })
-        .catch(err => {
-            if (err) throw err;
-        });
-})
+    let selected = req.params.id;
+
+    for (var i = 0; i < notes.length; i++) {
+        if (selected === notes[i].id)
+            notes.splice([i], 1)
+    }
+    return res.json(notes)
+});
 
 // starts the server
 app.listen(PORT, function () {
