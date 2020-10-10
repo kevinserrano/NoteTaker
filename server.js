@@ -30,8 +30,13 @@ app.get("/notes", (req, res) => {
 });
 
 
-app.get("/api/notes", (req, res) => {
-    return res.json(notes)
+app.get("/api/notes", (req,res)=>{
+
+    readFileAsync("./db/db.json", "utf8")
+    .then((notes, err)=>{
+        if(err) console.log(err);       
+        return res.json(JSON.parse(notes));       
+    });     
 });
 
 //
