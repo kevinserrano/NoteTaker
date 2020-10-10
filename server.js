@@ -41,17 +41,26 @@ app.get("*", (req, res) => {
 
 
 app.post("/api/notes"), (req, res) => {
-    const newNote = req.body;
-    if(notes.length === 0){
-        Object.assign(note, {"id": "0"})
-      }else{
-      const lastId = parseInt(notes[notes.length -1].id);
-        Object.assign(newNote, {"id": (lastId + 1).toString()})
-      }
-      notes.push(newNote);
-      res.json(newNote);
-    };
-    
+    let newNote = req.body
+    readFileAsync("./db/db.json", "utf8")
+        .then((result, err) => {
+            if (err) console.log(err);
+            return res.json(result);
+        })
+        .then(data => {
+            newNote.id = getLastIndex(data) + 1;
+            (data.length > 0) ? data.push(notes): data = [newNote];
+            return Promise.resolve(data);
+        }).then(data => {
+            //write the new file
+            writeFileAsync("./db/db.json", JSON.stringify(data));
+            res.json(newNote);
+        })
+        .catch(err => {
+            if (err) throw err;
+        });
+
+}
 
 app.delete("/api/notes/:id", (req, res) => {
     let selected = req.params.id;
